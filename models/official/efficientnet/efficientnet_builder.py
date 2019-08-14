@@ -20,7 +20,7 @@ from __future__ import print_function
 
 import os
 import re
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 import efficientnet_model
 
@@ -160,8 +160,8 @@ def get_model_params(model_name, override_params):
     # in global_params.
     global_params = global_params._replace(**override_params)
 
-  tf.logging.info('global_params= %s', global_params)
-  tf.logging.info('blocks_args= %s', blocks_args)
+  tf.logging.debug('global_params= %s', global_params)
+  tf.logging.debug('blocks_args= %s', blocks_args)
   return blocks_args, global_params
 
 
@@ -197,7 +197,7 @@ def build_model(images,
       if not tf.gfile.Exists(model_dir):
         tf.gfile.MakeDirs(model_dir)
       with tf.gfile.GFile(param_file, 'w') as f:
-        tf.logging.info('writing to %s' % param_file)
+        tf.logging.debug('writing to %s' % param_file)
         f.write('model_name= %s\n\n' % model_name)
         f.write('global_params= %s\n\n' % str(global_params))
         f.write('blocks_args= %s\n\n' % str(blocks_args))
